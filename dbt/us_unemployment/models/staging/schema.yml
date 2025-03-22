@@ -1,0 +1,15 @@
+version: 2
+
+sources:
+  - name: us_unemployment_data
+    database: "{{ env_var('DBT_DATABASE', 'de-zoomcamp-project-25') }}"
+    schema: "{{ env_var('DBT_SCHEMA', 'us_unemployment_data') }}"
+      # loaded_at_field: record_loaded_at
+    tables:
+      - name: unemployment_external
+         # freshness:
+           # error_after: {count: 6, period: hour}
+
+
+models:
+    - name: stg_unemployment
