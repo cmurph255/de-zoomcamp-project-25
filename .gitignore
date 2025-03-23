@@ -1,1 +1,8 @@
 .cred.json
+# Terraform local directories and files
+.terraform/
+*.tfstate
+*.tfstate.*
+crash.log
+*.log
+*.backup
