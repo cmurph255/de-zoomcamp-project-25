@@ -6,3 +6,5 @@
 crash.log
 *.log
 *.backup
+
+/dbt/logs/

@@ -10,6 +10,7 @@ SELECT
     a.state_code,
     a.county_code,
     a.county_name,
+    a.state_abbr,
     a.labor_force AS cnty_labor_force,
     a.employed AS cnt_employed,
     a.unemployed AS cnty_unemployed,
