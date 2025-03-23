@@ -40,11 +40,11 @@ docker-compose up -d
 ```
 
 Import the kestra flows from github so they are on the VM:
-* Run the GCP_Key values to set your project key values (it can now write to gcp storage, bq)
+* Run the GCP_Key values to set your project key values (it can now write to gcp storage, bq) - make sure to set the credentials value to .cred.json
 * DBT: sync with DBT in main project repo by running upload_dbt_project
 * 
 
-
+https://www.bls.gov/cps/cpsa2024.xlsx
 
 
 

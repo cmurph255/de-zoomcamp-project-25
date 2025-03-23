@@ -29,16 +29,6 @@ variable "bq_dataset_name" {
   default = "us_unemployment_data"
 }
 
-variable "dbt_stg_us_unemployment" {
-  description = "BigQuery dataset for staging"
-  default     = "dbt_stg_us_unemployment"
-}
-
-variable "dbt_prod_us_unemployment" {
-  description = "BigQuery dataset for production"
-  default     = "dbt_prod_us_unemployment"
-}
-
 
 variable "gcs_bucket_name" {
   description = "My Storage Bucket Name"

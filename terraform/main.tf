@@ -34,18 +34,6 @@ resource "google_bigquery_dataset" "us-unemployment-bq" {
   delete_contents_on_destroy = true
 }
 
-resource "google_bigquery_dataset" "dbt-staging-bq" {
-  dataset_id = var.dbt_stg_us_unemployment
-  location   = var.location
-  delete_contents_on_destroy = true
-}
-
-resource "google_bigquery_dataset" "dbt-prod-bq" {
-  dataset_id = var.dbt_prod_us_unemployment
-  location   = var.location
-  delete_contents_on_destroy = true
-}
-
 resource "google_compute_instance" "de-zoomcamp-project-vm" {
   name         = var.vm_name
   machine_type = var.vm_machine_type

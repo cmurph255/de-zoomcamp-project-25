@@ -1,4 +1,4 @@
-id: dbt_test2
+id: dbt_build
 namespace: zoomcamp
 
 variables:
@@ -41,3 +41,13 @@ tasks:
                 location: us-east4
                 threads: 4
             target: dev
+
+
+
+triggers:
+  - id: flow_trigger
+    type: io.kestra.plugin.core.trigger.Flow
+    conditions:
+      - type: io.kestra.plugin.core.condition.ExecutionFlow
+        namespace: zoomcamp
+        flowId: unemployment_reference_data

@@ -66,6 +66,11 @@ tasks:
         #drop non numeric rows
         df = df[pd.to_numeric(df["state_code"], errors="coerce").notnull()]
 
+        # Parse state abbreviation from "county_name, ST"
+        df[["county_name", "state_abbr"]] = df["county_name"].str.split(",", expand=True)
+        df["county_name"] = df["county_name"].str.strip()
+        df["state_abbr"] = df["state_abbr"].str.strip()
+
         # Convert numeric columns to correct types
         int_columns = ["state_code", "county_code", "year", "labor_force", 
                       "employed", "unemployed"]
@@ -102,7 +107,8 @@ tasks:
           labor_force INT64  OPTIONS (description = 'Total labor force'),
           employed INT64  OPTIONS (description = 'Total employed individuals'),
           unemployed INT64  OPTIONS (description = 'Total unemployed individuals'),
-          unemployment_rate FLOAT64 OPTIONS (description = 'Unemployment rate percentage')
+          unemployment_rate FLOAT64 OPTIONS (description = 'Unemployment rate percentage'),
+          state_abbr STRING,
       )
       OPTIONS (
           format = 'CSV',
@@ -126,3 +132,12 @@ pluginDefaults:
       location: "{{kv('GCP_LOCATION')}}"
       bucket: "{{kv('GCP_BUCKET_NAME')}}"
       dataset: "{{kv('GCP_DATASET')}}" 
+
+
+triggers:
+  - id: unemployment_yearly_schedule_trigger
+    type: io.kestra.plugin.core.trigger.Schedule
+    cron: "0 10 1 1 *"  
+    timezone: America/New_York  
+    inputs:
+      year: "{{ trigger.date | date('yy') }}" 

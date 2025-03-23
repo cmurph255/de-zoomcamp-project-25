@@ -44,7 +44,7 @@ tasks:
     commands:
       - pip install openpyxl  
       - pip install fsspec
-      - cp "{{ outputs.extract.outputFiles['us_unemployment_reference' ~ inputs.year ~ '.xlsx'] }}" us_unemployment_reference.xlsx  
+      - cp "{{ outputs.extract.outputFiles['us_unemployment_reference' ~ inputs.year ~ '.xlsx'] }}" us_unemployment_reference.xlsx 
       - python script.py
     inputFiles:
       script.py: |
@@ -123,3 +123,13 @@ pluginDefaults:
       location: "{{kv('GCP_LOCATION')}}"
       bucket: "{{kv('GCP_BUCKET_NAME')}}"
       dataset: "{{kv('GCP_DATASET')}}" 
+
+
+triggers:
+  - id: flow_trigger
+    type: io.kestra.plugin.core.trigger.Flow
+    conditions:
+      - type: io.kestra.plugin.core.condition.ExecutionFlow
+        namespace: zoomcamp
+        flowId: unemployment_data_dl_test1
+
