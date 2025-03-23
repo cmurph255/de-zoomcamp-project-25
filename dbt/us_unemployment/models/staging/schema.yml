@@ -7,9 +7,11 @@ sources:
       # loaded_at_field: record_loaded_at
     tables:
       - name: unemployment_external
+      - name: unemployment_reference_external
          # freshness:
            # error_after: {count: 6, period: hour}
 
 
 models:
     - name: stg_unemployment
+    - name: stg_unemployment_reference

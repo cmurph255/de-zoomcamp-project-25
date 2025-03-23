@@ -1,0 +1,17 @@
+id: upload_dbt_project
+namespace: zoomcamp
+
+tasks:
+  - id: wdir
+    type: io.kestra.plugin.core.flow.WorkingDirectory
+    tasks:
+      - id: git_clone
+        type: io.kestra.plugin.git.Clone
+        url: https://github.com/cmurph255/de-zoomcamp-project-25.git
+        branch: main
+
+      - id: upload
+        type: io.kestra.plugin.core.namespace.UploadFiles
+        namespace: "{{ flow.namespace }}"
+        files:
+          - "glob:**/dbt/**"

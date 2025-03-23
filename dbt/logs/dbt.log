@@ -1,0 +1,149 @@
+[0m16:33:59.268447 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001A6537F07C0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001A655729B80>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001A655729B50>]}
+
+
+============================== 16:33:59.272448 | de9bb126-6404-401b-b85b-7b3bfdac9190 ==============================
+[0m16:33:59.272448 [info ] [MainThread]: Running with dbt=1.9.3
+[0m16:33:59.272448 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'write_json': 'True', 'log_cache_events': 'False', 'partial_parse': 'True', 'cache_selected_only': 'False', 'profiles_dir': 'C:\\Users\\cmurp\\.dbt', 'version_check': 'True', 'warn_error': 'None', 'log_path': 'logs', 'debug': 'False', 'fail_fast': 'False', 'use_colors': 'True', 'use_experimental_parser': 'False', 'empty': 'None', 'quiet': 'False', 'no_print': 'None', 'warn_error_options': 'WarnErrorOptions(include=[], exclude=[])', 'introspect': 'True', 'invocation_command': 'dbt init', 'log_format': 'default', 'target_path': 'None', 'static_parser': 'True', 'send_anonymous_usage_stats': 'True'}
+[0m16:34:16.715352 [debug] [MainThread]: Starter project path: c:\users\cmurp\appdata\local\programs\python\python39\lib\site-packages\dbt\include\starter_project
+[0m16:34:16.780108 [info ] [MainThread]: 
+Your new dbt project "us_unemployment" was created!
+
+For more information on how to configure the profiles.yml file,
+please consult the dbt documentation here:
+
+  https://docs.getdbt.com/docs/configure-your-profile
+
+One more thing:
+
+Need help? Don't hesitate to reach out to us via GitHub issues or on Slack:
+
+  https://community.getdbt.com/
+
+Happy modeling!
+
+[0m16:34:16.782108 [info ] [MainThread]: Setting up your profile.
+[0m16:35:03.963467 [info ] [MainThread]: Profile us_unemployment written to C:\Users\cmurp\.dbt\profiles.yml using target's profile_template.yml and your supplied values. Run 'dbt debug' to validate the connection.
+[0m16:35:03.965496 [debug] [MainThread]: Command `dbt init` succeeded at 16:35:03.965496 after 64.77 seconds
+[0m16:35:03.965496 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001A6537F07C0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001A655729B80>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001A6556AD4C0>]}
+[0m16:35:03.966500 [debug] [MainThread]: Flushing usage events
+[0m16:35:04.127864 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m13:13:24.739834 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001F6BF6D0760>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001F6C15E1580>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001F6C15E1430>]}
+
+
+============================== 13:13:24.747834 | 5f38c7e1-3555-4a7f-b04e-dc8f10048c22 ==============================
+[0m13:13:24.747834 [info ] [MainThread]: Running with dbt=1.9.3
+[0m13:13:24.752834 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'log_cache_events': 'False', 'write_json': 'True', 'partial_parse': 'True', 'cache_selected_only': 'False', 'profiles_dir': 'C:\\Users\\cmurp\\.dbt', 'fail_fast': 'False', 'debug': 'False', 'log_path': 'logs', 'warn_error': 'None', 'version_check': 'True', 'use_colors': 'True', 'use_experimental_parser': 'False', 'empty': 'None', 'quiet': 'False', 'no_print': 'None', 'warn_error_options': 'WarnErrorOptions(include=[], exclude=[])', 'invocation_command': 'dbt debug', 'introspect': 'True', 'log_format': 'default', 'target_path': 'None', 'static_parser': 'True', 'send_anonymous_usage_stats': 'True'}
+[0m13:13:24.811834 [info ] [MainThread]: dbt version: 1.9.3
+[0m13:13:24.811834 [info ] [MainThread]: python version: 3.9.1
+[0m13:13:24.812833 [info ] [MainThread]: python path: c:\users\cmurp\appdata\local\programs\python\python39\python.exe
+[0m13:13:24.812833 [info ] [MainThread]: os info: Windows-10-10.0.19041-SP0
+[0m13:13:25.660834 [info ] [MainThread]: Using profiles dir at C:\Users\cmurp\.dbt
+[0m13:13:25.661834 [info ] [MainThread]: Using profiles.yml file at C:\Users\cmurp\.dbt\profiles.yml
+[0m13:13:25.661834 [info ] [MainThread]: Using dbt_project.yml file at C:\Users\cmurp\apps\de-zoomcamp-project-25\dbt\dbt_project.yml
+[0m13:13:25.662834 [info ] [MainThread]: adapter type: bigquery
+[0m13:13:25.662834 [info ] [MainThread]: adapter version: 1.9.1
+[0m13:13:25.663834 [info ] [MainThread]: Configuration:
+[0m13:13:25.663834 [info ] [MainThread]:   profiles.yml file [[32mOK found and valid[0m]
+[0m13:13:25.664834 [info ] [MainThread]:   dbt_project.yml file [[31mERROR not found[0m]
+[0m13:13:25.664834 [info ] [MainThread]: Required dependencies:
+[0m13:13:25.665834 [debug] [MainThread]: Executing "git --help"
+[0m13:13:25.716834 [debug] [MainThread]: STDOUT: "b"usage: git [--version] [--help] [-C <path>] [-c <name>=<value>]\n           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]\n           [-p | --paginate | -P | --no-pager] [--no-replace-objects] [--bare]\n           [--git-dir=<path>] [--work-tree=<path>] [--namespace=<name>]\n           <command> [<args>]\n\nThese are common Git commands used in various situations:\n\nstart a working area (see also: git help tutorial)\n   clone             Clone a repository into a new directory\n   init              Create an empty Git repository or reinitialize an existing one\n\nwork on the current change (see also: git help everyday)\n   add               Add file contents to the index\n   mv                Move or rename a file, a directory, or a symlink\n   restore           Restore working tree files\n   rm                Remove files from the working tree and from the index\n   sparse-checkout   Initialize and modify the sparse-checkout\n\nexamine the history and state (see also: git help revisions)\n   bisect            Use binary search to find the commit that introduced a bug\n   diff              Show changes between commits, commit and working tree, etc\n   grep              Print lines matching a pattern\n   log               Show commit logs\n   show              Show various types of objects\n   status            Show the working tree status\n\ngrow, mark and tweak your common history\n   branch            List, create, or delete branches\n   commit            Record changes to the repository\n   merge             Join two or more development histories together\n   rebase            Reapply commits on top of another base tip\n   reset             Reset current HEAD to the specified state\n   switch            Switch branches\n   tag               Create, list, delete or verify a tag object signed with GPG\n\ncollaborate (see also: git help workflows)\n   fetch             Download objects and refs from another repository\n   pull              Fetch from and integrate with another repository or a local branch\n   push              Update remote refs along with associated objects\n\n'git help -a' and 'git help -g' list available subcommands and some\nconcept guides. See 'git help <command>' or 'git help <concept>'\nto read about a specific subcommand or concept.\nSee 'git help git' for an overview of the system.\n""
+[0m13:13:25.716834 [debug] [MainThread]: STDERR: "b''"
+[0m13:13:25.716834 [info ] [MainThread]:  - git [[32mOK found[0m]
+
+[0m13:13:25.717834 [info ] [MainThread]: Connection:
+[0m13:13:25.718834 [info ] [MainThread]:   method: service-account
+[0m13:13:25.718834 [info ] [MainThread]:   database: de-zoomcamp-project-25
+[0m13:13:25.719834 [info ] [MainThread]:   execution_project: de-zoomcamp-project-25
+[0m13:13:25.719834 [info ] [MainThread]:   schema: us_unemployment_data
+[0m13:13:25.720834 [info ] [MainThread]:   location: US
+[0m13:13:25.720834 [info ] [MainThread]:   priority: interactive
+[0m13:13:25.721836 [info ] [MainThread]:   maximum_bytes_billed: None
+[0m13:13:25.721836 [info ] [MainThread]:   impersonate_service_account: None
+[0m13:13:25.721836 [info ] [MainThread]:   job_retry_deadline_seconds: None
+[0m13:13:25.722834 [info ] [MainThread]:   job_retries: 1
+[0m13:13:25.722834 [info ] [MainThread]:   job_creation_timeout_seconds: None
+[0m13:13:25.723835 [info ] [MainThread]:   job_execution_timeout_seconds: 200
+[0m13:13:25.723835 [info ] [MainThread]:   timeout_seconds: 200
+[0m13:13:25.724834 [info ] [MainThread]:   client_id: None
+[0m13:13:25.724834 [info ] [MainThread]:   token_uri: None
+[0m13:13:25.725836 [info ] [MainThread]:   dataproc_region: None
+[0m13:13:25.725836 [info ] [MainThread]:   dataproc_cluster_name: None
+[0m13:13:25.726833 [info ] [MainThread]:   gcs_bucket: None
+[0m13:13:25.726833 [info ] [MainThread]:   dataproc_batch: None
+[0m13:13:25.727834 [info ] [MainThread]: Registered adapter: bigquery=1.9.1
+[0m13:13:26.654833 [debug] [MainThread]: Acquiring new bigquery connection 'debug'
+[0m13:13:26.655834 [debug] [MainThread]: On debug: select 1 as id
+[0m13:13:26.655834 [debug] [MainThread]: Opening a new connection, currently in state init
+[0m13:13:27.681833 [debug] [MainThread]: BigQuery adapter: https://console.cloud.google.com/bigquery?project=de-zoomcamp-project-25&j=bq:US:57c93637-d2ec-4738-ad84-7210257ea661&page=queryresults
+[0m13:13:30.145834 [info ] [MainThread]:   Connection test: [[32mOK connection ok[0m]
+
+[0m13:13:30.146835 [info ] [MainThread]: [31m1 check failed:[0m
+[0m13:13:30.146835 [info ] [MainThread]: Project loading failed for the following reason:
+ project path <C:\Users\cmurp\apps\de-zoomcamp-project-25\dbt\dbt_project.yml> not found
+
+[0m13:13:30.147834 [debug] [MainThread]: Command `dbt debug` failed at 13:13:30.147834 after 5.49 seconds
+[0m13:13:30.147834 [debug] [MainThread]: Connection 'debug' was properly closed.
+[0m13:13:30.148834 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001F6BF6D0760>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001F6E28AA1F0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001F6E2910100>]}
+[0m13:13:30.148834 [debug] [MainThread]: Flushing usage events
+[0m13:13:30.295833 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m13:19:24.782674 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001BE3E520760>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001BE40432580>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001BE40432430>]}
+
+
+============================== 13:19:24.785675 | ece30533-3a08-4588-8500-fa016537c408 ==============================
+[0m13:19:24.785675 [info ] [MainThread]: Running with dbt=1.9.3
+[0m13:19:24.786674 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'log_cache_events': 'False', 'write_json': 'True', 'partial_parse': 'True', 'cache_selected_only': 'False', 'profiles_dir': 'C:\\Users\\cmurp\\.dbt', 'fail_fast': 'False', 'debug': 'False', 'log_path': 'logs', 'version_check': 'True', 'warn_error': 'None', 'use_colors': 'True', 'use_experimental_parser': 'False', 'empty': 'None', 'quiet': 'False', 'no_print': 'None', 'log_format': 'default', 'introspect': 'True', 'invocation_command': 'dbt debug', 'static_parser': 'True', 'target_path': 'None', 'warn_error_options': 'WarnErrorOptions(include=[], exclude=[])', 'send_anonymous_usage_stats': 'True'}
+[0m13:19:24.803674 [info ] [MainThread]: dbt version: 1.9.3
+[0m13:19:24.804675 [info ] [MainThread]: python version: 3.9.1
+[0m13:19:24.804675 [info ] [MainThread]: python path: c:\users\cmurp\appdata\local\programs\python\python39\python.exe
+[0m13:19:24.805646 [info ] [MainThread]: os info: Windows-10-10.0.19041-SP0
+[0m13:19:25.653672 [info ] [MainThread]: Using profiles dir at C:\Users\cmurp\.dbt
+[0m13:19:25.653672 [info ] [MainThread]: Using profiles.yml file at C:\Users\cmurp\.dbt\profiles.yml
+[0m13:19:25.654674 [info ] [MainThread]: Using dbt_project.yml file at C:\Users\cmurp\apps\de-zoomcamp-project-25\dbt\dbt_project.yml
+[0m13:19:25.655646 [info ] [MainThread]: adapter type: bigquery
+[0m13:19:25.655646 [info ] [MainThread]: adapter version: 1.9.1
+[0m13:19:25.656675 [info ] [MainThread]: Configuration:
+[0m13:19:25.656675 [info ] [MainThread]:   profiles.yml file [[32mOK found and valid[0m]
+[0m13:19:25.657674 [info ] [MainThread]:   dbt_project.yml file [[31mERROR not found[0m]
+[0m13:19:25.657674 [info ] [MainThread]: Required dependencies:
+[0m13:19:25.658675 [debug] [MainThread]: Executing "git --help"
+[0m13:19:25.689644 [debug] [MainThread]: STDOUT: "b"usage: git [--version] [--help] [-C <path>] [-c <name>=<value>]\n           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]\n           [-p | --paginate | -P | --no-pager] [--no-replace-objects] [--bare]\n           [--git-dir=<path>] [--work-tree=<path>] [--namespace=<name>]\n           <command> [<args>]\n\nThese are common Git commands used in various situations:\n\nstart a working area (see also: git help tutorial)\n   clone             Clone a repository into a new directory\n   init              Create an empty Git repository or reinitialize an existing one\n\nwork on the current change (see also: git help everyday)\n   add               Add file contents to the index\n   mv                Move or rename a file, a directory, or a symlink\n   restore           Restore working tree files\n   rm                Remove files from the working tree and from the index\n   sparse-checkout   Initialize and modify the sparse-checkout\n\nexamine the history and state (see also: git help revisions)\n   bisect            Use binary search to find the commit that introduced a bug\n   diff              Show changes between commits, commit and working tree, etc\n   grep              Print lines matching a pattern\n   log               Show commit logs\n   show              Show various types of objects\n   status            Show the working tree status\n\ngrow, mark and tweak your common history\n   branch            List, create, or delete branches\n   commit            Record changes to the repository\n   merge             Join two or more development histories together\n   rebase            Reapply commits on top of another base tip\n   reset             Reset current HEAD to the specified state\n   switch            Switch branches\n   tag               Create, list, delete or verify a tag object signed with GPG\n\ncollaborate (see also: git help workflows)\n   fetch             Download objects and refs from another repository\n   pull              Fetch from and integrate with another repository or a local branch\n   push              Update remote refs along with associated objects\n\n'git help -a' and 'git help -g' list available subcommands and some\nconcept guides. See 'git help <command>' or 'git help <concept>'\nto read about a specific subcommand or concept.\nSee 'git help git' for an overview of the system.\n""
+[0m13:19:25.689644 [debug] [MainThread]: STDERR: "b''"
+[0m13:19:25.690644 [info ] [MainThread]:  - git [[32mOK found[0m]
+
+[0m13:19:25.690644 [info ] [MainThread]: Connection:
+[0m13:19:25.691645 [info ] [MainThread]:   method: service-account
+[0m13:19:25.691645 [info ] [MainThread]:   database: de-zoomcamp-project-25
+[0m13:19:25.692646 [info ] [MainThread]:   execution_project: de-zoomcamp-project-25
+[0m13:19:25.692646 [info ] [MainThread]:   schema: us_unemployment_data
+[0m13:19:25.693646 [info ] [MainThread]:   location: US
+[0m13:19:25.693646 [info ] [MainThread]:   priority: interactive
+[0m13:19:25.694644 [info ] [MainThread]:   maximum_bytes_billed: None
+[0m13:19:25.694644 [info ] [MainThread]:   impersonate_service_account: None
+[0m13:19:25.695644 [info ] [MainThread]:   job_retry_deadline_seconds: None
+[0m13:19:25.695644 [info ] [MainThread]:   job_retries: 1
+[0m13:19:25.696645 [info ] [MainThread]:   job_creation_timeout_seconds: None
+[0m13:19:25.696645 [info ] [MainThread]:   job_execution_timeout_seconds: 200
+[0m13:19:25.696645 [info ] [MainThread]:   timeout_seconds: 200
+[0m13:19:25.697645 [info ] [MainThread]:   client_id: None
+[0m13:19:25.697645 [info ] [MainThread]:   token_uri: None
+[0m13:19:25.698644 [info ] [MainThread]:   dataproc_region: None
+[0m13:19:25.698644 [info ] [MainThread]:   dataproc_cluster_name: None
+[0m13:19:25.699644 [info ] [MainThread]:   gcs_bucket: None
+[0m13:19:25.699644 [info ] [MainThread]:   dataproc_batch: None
+[0m13:19:25.700644 [info ] [MainThread]: Registered adapter: bigquery=1.9.1
+[0m13:19:26.125645 [debug] [MainThread]: Acquiring new bigquery connection 'debug'
+[0m13:19:26.125645 [debug] [MainThread]: On debug: select 1 as id
+[0m13:19:26.126674 [debug] [MainThread]: Opening a new connection, currently in state init
+[0m13:19:26.555674 [debug] [MainThread]: BigQuery adapter: https://console.cloud.google.com/bigquery?project=de-zoomcamp-project-25&j=bq:US:0680fd56-d80f-4875-9ce1-d55430eb8126&page=queryresults
+[0m13:19:27.027645 [info ] [MainThread]:   Connection test: [[32mOK connection ok[0m]
+
+[0m13:19:27.028644 [info ] [MainThread]: [31m1 check failed:[0m
+[0m13:19:27.028644 [info ] [MainThread]: Project loading failed for the following reason:
+ project path <C:\Users\cmurp\apps\de-zoomcamp-project-25\dbt\dbt_project.yml> not found
+
+[0m13:19:27.030644 [debug] [MainThread]: Command `dbt debug` failed at 13:19:27.029644 after 2.30 seconds
+[0m13:19:27.030644 [debug] [MainThread]: Connection 'debug' was properly closed.
+[0m13:19:27.030644 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001BE3E520760>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001BE61795610>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001BE61728820>]}
+[0m13:19:27.031644 [debug] [MainThread]: Flushing usage events
+[0m13:19:27.183674 [debug] [MainThread]: An error was encountered while trying to flush usage events

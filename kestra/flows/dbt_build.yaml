@@ -1,0 +1,43 @@
+id: dbt_test2
+namespace: zoomcamp
+
+variables:
+  profiles: |
+    us_unemployment:
+      outputs:
+        dev:
+          type: bigquery
+          method: service-account
+          project: de-zoomcamp-project-25
+          dataset: us_unemployment_data
+          location: us-east4
+          threads: 4
+      target: dev
+
+tasks:
+  - id: dbt
+    type: io.kestra.plugin.core.flow.WorkingDirectory
+    tasks:
+      - id: clone_repository
+        type: io.kestra.plugin.git.Clone
+        url: https://github.com/cmurph255/de-zoomcamp-project-25.git
+        branch: main
+
+      - id: dbt_build
+        type: io.kestra.plugin.dbt.cli.Build
+        taskRunner:
+          type: io.kestra.plugin.scripts.runner.docker.Docker
+        dbtPath: /usr/local/bin/dbt
+        containerImage: ghcr.io/kestra-io/dbt-bigquery:latest
+        projectDir: /dbt/us_unemployment
+        profiles: |
+          us_unemployment:
+            outputs:
+              dev:
+                type: bigquery
+                method: service-account
+                project: de-zoomcamp-project-25
+                dataset: us_unemployment_data
+                location: us-east4
+                threads: 4
+            target: dev

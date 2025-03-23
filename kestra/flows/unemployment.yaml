@@ -1,0 +1,128 @@
+id: unemployment_data_dl_test1
+namespace: zoomcamp
+description: |
+  The CSV Data used in the course: https://www.bls.gov/lau/laucnty23.xlsx
+
+inputs:
+  - id: year
+    type: SELECT
+    displayName: Select year
+    values: ["06", "07", "08", "09", "10"]
+    defaults: "07"
+    allowCustomValue: true 
+
+variables:
+  file_xlsx: "us_unemployment_{{inputs.year}}.xlsx"
+  file_csv: "us_unemployment_{{inputs.year}}.csv"
+  gcs_file: "gs://{{kv('GCP_BUCKET_NAME')}}/us_unemployment_{{inputs.year}}.csv"
+  data: "{{outputs.extract.outputFiles['us_unemployment_' ~ inputs.year ~ '.xlsx']}}"
+  data_csv: "{{outputs.clean.outputFiles['us_unemployment_' ~ inputs.year ~ '.csv']}}"
+
+tasks:
+  - id: set_label
+    type: io.kestra.plugin.core.execution.Labels
+    labels:
+      file: "{{render(vars.file_xlsx)}}"
+
+  - id: extract
+    type: io.kestra.plugin.scripts.shell.Commands
+    outputFiles:
+      - "*.xlsx"
+    taskRunner:
+      type: io.kestra.plugin.core.runner.Process
+    commands:
+      - >
+        curl -L -o "{{ render(vars.file_xlsx) }}"
+        "https://www.bls.gov/lau/laucnty{{ inputs.year }}.xlsx"
+        --user-agent "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
+
+  - id: clean
+    type: io.kestra.plugin.scripts.python.Commands
+    taskRunner:
+      type: io.kestra.plugin.scripts.runner.docker.Docker
+    containerImage: ghcr.io/kestra-io/pydata:latest
+    commands:
+      - pip install openpyxl  
+      - pip install fsspec
+      - cp "{{ outputs.extract.outputFiles['us_unemployment_' ~ inputs.year ~ '.xlsx'] }}" us_unemployment.xlsx 
+      - python script.py
+    inputFiles:
+      script.py: |
+        import pandas as pd
+
+        # Use the locally copied file instead of Kestra storage path
+        input_xlsx = "us_unemployment.xlsx"
+        output_csv = "{{render(vars.file_csv)}}"
+
+        # Load Excel file, skipping the first 6 rows
+        df = pd.read_excel(input_xlsx, skiprows=6, engine="openpyxl")
+
+        # Drop column F (Year column)
+        df.drop(df.columns[5], axis=1, inplace=True)
+
+        # Rename columns
+        df.columns = ["LAUS Code", "state_code", "county_code", "county_name", "year", "labor_force", "employed", "unemployed", "unemployment_rate"]
+        
+        #drop non numeric rows
+        df = df[pd.to_numeric(df["state_code"], errors="coerce").notnull()]
+
+        # Convert numeric columns to correct types
+        int_columns = ["state_code", "county_code", "year", "labor_force", 
+                      "employed", "unemployed"]
+        float_columns = ["unemployment_rate"]
+
+        df[int_columns] = df[int_columns].fillna(0).astype(int)
+        df[float_columns] = df[float_columns].fillna(0.0).astype(float)
+
+        # Save to CSV
+        df.to_csv(output_csv, index=False)
+    outputFiles:
+      - "{{ render(vars.file_csv) }}"
+
+
+
+  - id: upload_to_gcs
+    type: io.kestra.plugin.gcp.gcs.Upload
+    from: "{{render(vars.data_csv)}}"
+    to: "{{render(vars.gcs_file)}}"
+
+
+
+
+  - id: upload_to_bigquery_staging
+    type: io.kestra.plugin.gcp.bigquery.Query
+    sql: |
+      CREATE OR REPLACE EXTERNAL TABLE `{{kv('GCP_PROJECT_ID')}}.{{kv('GCP_DATASET')}}.unemployment_external`
+      (
+          LAUS_Code STRING OPTIONS (description = 'Local Area Unemployment Statistics Code'),
+          state_code INT64 OPTIONS (description = 'State FIPS Code'),
+          county_code INT64 OPTIONS (description = 'County FIPS Code'),
+          county_name STRING OPTIONS (description = 'Name of the county'),
+          year INT64 OPTIONS (description = 'Year of the unemployment data'),
+          labor_force INT64  OPTIONS (description = 'Total labor force'),
+          employed INT64  OPTIONS (description = 'Total employed individuals'),
+          unemployed INT64  OPTIONS (description = 'Total unemployed individuals'),
+          unemployment_rate FLOAT64 OPTIONS (description = 'Unemployment rate percentage')
+      )
+      OPTIONS (
+          format = 'CSV',
+          uris = ['gs://{{kv("GCP_BUCKET_NAME")}}/us_unemployment_*.csv'],
+          skip_leading_rows = 1,
+          ignore_unknown_values = TRUE
+      );
+    serviceAccount: "{{kv('GCP_CREDS')}}"
+
+
+  - id: purge_files
+    type: io.kestra.plugin.core.storage.PurgeCurrentExecutionFiles
+    description: If you'd like to explore Kestra outputs, disable it.
+    disabled: false
+
+pluginDefaults:
+  - type: io.kestra.plugin.gcp
+    values:
+      serviceAccount: "{{kv('GCP_CREDS')}}"
+      projectId: "{{kv('GCP_PROJECT_ID')}}"
+      location: "{{kv('GCP_LOCATION')}}"
+      bucket: "{{kv('GCP_BUCKET_NAME')}}"
+      dataset: "{{kv('GCP_DATASET')}}" 

@@ -1,0 +1,125 @@
+id: unemployment_reference_data
+namespace: zoomcamp
+description: |
+  The CSV Data used in the course
+
+inputs:
+  - id: year
+    type: SELECT
+    displayName: Select year
+    values: ["23", "24", "22", "21", "20"]
+    defaults: "24"
+    allowCustomValue: true 
+
+variables:
+  file_xlsx: "us_unemployment_reference{{inputs.year}}.xlsx"
+  file_csv: "us_unemployment_reference{{inputs.year}}.csv"
+  gcs_file: "gs://{{kv('GCP_BUCKET_NAME')}}/reference_data/us_unemployment_reference{{inputs.year}}.csv"
+  data: "{{outputs.extract.outputFiles['us_unemployment_reference' ~ inputs.year ~ '.xlsx']}}"
+  data_csv: "{{outputs.clean.outputFiles['us_unemployment_reference' ~ inputs.year ~ '.csv']}}"
+
+tasks:
+  - id: set_label
+    type: io.kestra.plugin.core.execution.Labels
+    labels:
+      file: "{{render(vars.file_xlsx)}}"
+
+  - id: extract
+    type: io.kestra.plugin.scripts.shell.Commands
+    outputFiles:
+      - "*.xlsx"
+    taskRunner:
+      type: io.kestra.plugin.core.runner.Process
+    commands:
+      - >
+        curl -L -o "{{ render(vars.file_xlsx) }}"
+        "https://www.bls.gov/cps/cpsa20{{ inputs.year }}.xlsx"
+        --user-agent "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
+
+  - id: clean
+    type: io.kestra.plugin.scripts.python.Commands
+    taskRunner:
+      type: io.kestra.plugin.scripts.runner.docker.Docker
+    containerImage: ghcr.io/kestra-io/pydata:latest
+    commands:
+      - pip install openpyxl  
+      - pip install fsspec
+      - cp "{{ outputs.extract.outputFiles['us_unemployment_reference' ~ inputs.year ~ '.xlsx'] }}" us_unemployment_reference.xlsx  
+      - python script.py
+    inputFiles:
+      script.py: |
+        import pandas as pd
+
+        # Use the locally copied file instead of Kestra storage path
+        input_xlsx = "us_unemployment_reference.xlsx"
+        output_csv = "{{render(vars.file_csv)}}"
+
+        # Load Excel file, skipping the first 8 rows
+        df = pd.read_excel(input_xlsx, skiprows=8, engine="openpyxl")
+
+        # Rename columns
+        df.columns = ["year", "total_population", "labor_force_pop", "labor_force_pct", "employed_total", "employed_pct", "agri_total", "non_agri_total", "unemployed_pop", "unemployed_pct", "total_not_in_labor"]
+
+        #drop non numeric rows
+        df = df[pd.to_numeric(df["year"], errors="coerce").notnull()]
+
+        # Convert numeric columns to correct types
+        int_columns = ["year", "total_population", "labor_force_pop", "employed_total", 
+                      "agri_total", "non_agri_total", "unemployed_pop", "total_not_in_labor"]
+        float_columns = ["labor_force_pct", "employed_pct", "unemployed_pct"]
+
+        df[int_columns] = df[int_columns].fillna(0).astype(int)
+        df[float_columns] = df[float_columns].fillna(0.0).astype(float)
+
+        # Save to CSV
+        df.to_csv(output_csv, index=False)
+    outputFiles:
+      - "{{ render(vars.file_csv) }}"
+
+
+
+  - id: upload_to_gcs
+    type: io.kestra.plugin.gcp.gcs.Upload
+    from: "{{render(vars.data_csv)}}"
+    to: "{{render(vars.gcs_file)}}"
+
+
+  - id: upload_to_bigquery_staging
+    type: io.kestra.plugin.gcp.bigquery.Query
+    sql: |
+      CREATE OR REPLACE EXTERNAL TABLE `{{kv('GCP_PROJECT_ID')}}.{{kv('GCP_DATASET')}}.unemployment_reference_external`
+      (
+          year INT64,
+          total_population INT64,
+          labor_force_pop INT64,
+          labor_force_pct FLOAT64,
+          employed_total INT64,
+          employed_pct FLOAT64,
+          agri_total INT64,
+          non_agri_total INT64,
+          unemployed_pop INT64,
+          unemployed_pct FLOAT64,
+          total_not_in_labor INT64
+      )
+      OPTIONS (
+          format = 'CSV',
+          uris = ['gs://{{kv("GCP_BUCKET_NAME")}}/reference_data/us_unemployment_reference*.csv'],
+          skip_leading_rows = 1,
+          ignore_unknown_values = TRUE
+      );
+    serviceAccount: "{{kv('GCP_CREDS')}}"
+
+
+  - id: purge_files
+    type: io.kestra.plugin.core.storage.PurgeCurrentExecutionFiles
+    description: If you'd like to explore Kestra outputs, disable it.
+    disabled: false
+
+pluginDefaults:
+  - type: io.kestra.plugin.gcp
+    values:
+      serviceAccount: "{{kv('GCP_CREDS')}}"
+      projectId: "{{kv('GCP_PROJECT_ID')}}"
+      location: "{{kv('GCP_LOCATION')}}"
+      bucket: "{{kv('GCP_BUCKET_NAME')}}"
+      dataset: "{{kv('GCP_DATASET')}}" 
