@@ -3,7 +3,7 @@ This project analyzes U.S. county-level unemployment data from 2006- present usi
 
 https://www.bls.gov/lau/
 
-![blshome](images/bls_home.png)
+![blshome](images/bls_home.JPG)
 
 
 ## Technology used:
@@ -88,9 +88,9 @@ This will pull in the necessary Kestra flows for this project.
 ## Dashboard Visualisation:
 Now that the backfill has ran we can easily analyze the data using Looker Studio:
 
-![state](images/state.png)
+![state](images/state.JPG)
 
-![county](images/county.png)
+![county](images/county.JPG)
 
 
 
