@@ -1,18 +1,6 @@
 id: dbt_build
 namespace: zoomcamp
 
-variables:
-  profiles: |
-    us_unemployment:
-      outputs:
-        dev:
-          type: bigquery
-          method: service-account
-          project: de-zoomcamp-project-25
-          dataset: us_unemployment_data
-          location: us-east4
-          threads: 4
-      target: dev
 
 tasks:
   - id: dbt
@@ -30,19 +18,22 @@ tasks:
         dbtPath: /usr/local/bin/dbt
         containerImage: ghcr.io/kestra-io/dbt-bigquery:latest
         projectDir: /dbt/us_unemployment
-        profiles: |
-          us_unemployment:
-            outputs:
-              dev:
-                type: bigquery
-                method: service-account
-                project: de-zoomcamp-project-25
-                dataset: us_unemployment_data
-                location: us-east4
-                threads: 4
-            target: dev
+        inputFiles:
+          .profile/profiles.yml: |
+            us_unemployment:
+              outputs:
+                dev:
+                  type: bigquery
+                  method: service-account
+                  project: de-zoomcamp-project-25
+                  dataset: us_unemployment_data
+                  keyfile: .profile/sa.json
+                  location: us-east4
+                  threads: 4
+              target: dev
 
-
+          .profile/sa.json: "{{ kv('GCP_CREDS') }}"
+        
 
 triggers:
   - id: flow_trigger
