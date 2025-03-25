@@ -7,9 +7,10 @@ inputs:
   - id: year
     type: SELECT
     displayName: Select year
-    values: ["06", "07", "08", "09", "10"]
-    defaults: "07"
+    values: ["07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24"]
     allowCustomValue: true 
+    required: false
+
 
 variables:
   file_xlsx: "us_unemployment_{{inputs.year}}.xlsx"
@@ -17,6 +18,7 @@ variables:
   gcs_file: "gs://{{kv('GCP_BUCKET_NAME')}}/us_unemployment_{{inputs.year}}.csv"
   data: "{{outputs.extract.outputFiles['us_unemployment_' ~ inputs.year ~ '.xlsx']}}"
   data_csv: "{{outputs.clean.outputFiles['us_unemployment_' ~ inputs.year ~ '.csv']}}"
+
 
 tasks:
   - id: set_label
@@ -64,7 +66,9 @@ tasks:
         df.columns = ["LAUS Code", "state_code", "county_code", "county_name", "year", "labor_force", "employed", "unemployed", "unemployment_rate"]
         
         #drop non numeric rows
-        df = df[pd.to_numeric(df["state_code"], errors="coerce").notnull()]
+        # df = df[pd.to_numeric(df["state_code"], errors="coerce").notnull()]
+        cols_to_check = ["state_code", "county_code", "year", "labor_force", "employed", "unemployed", "unemployment_rate"]
+        df = df[df[cols_to_check].apply(lambda x: pd.to_numeric(x, errors='coerce')).notnull().all(axis=1)]
 
         # Parse state abbreviation from "county_name, ST"
         df[["county_name", "state_abbr"]] = df["county_name"].str.split(",", expand=True)
@@ -72,8 +76,7 @@ tasks:
         df["state_abbr"] = df["state_abbr"].str.strip()
 
         # Convert numeric columns to correct types
-        int_columns = ["state_code", "county_code", "year", "labor_force", 
-                      "employed", "unemployed"]
+        int_columns = ["state_code", "county_code", "year", "labor_force", "employed", "unemployed"]
         float_columns = ["unemployment_rate"]
 
         df[int_columns] = df[int_columns].fillna(0).astype(int)
